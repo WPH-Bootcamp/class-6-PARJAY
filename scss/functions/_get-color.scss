@@ -2,27 +2,29 @@
 @use 'sass:map';
 @use 'sass:list';
 
+// what method is more efficient?
+// @debug map.get($color-pallete, 'p');       // null
+// @debug map.has-key($color-pallete, 'p');   // false
+
+// according to bard => map.has-key
+// map.has-key() only needs to check if the key exists.
+// map.get() might have to iterate through the map to find the value, even if the key doesn't exist.
+
 // i'm avoiding each because i believe that will do a performance issue when the 2 dimensional array is big
 @function get-color($type, $level) {
-  // add the logic here
-  // use if else to check if the type and level are valid
-  // if they are valid, return the color
-  // if they are not valid warn 'Invalid color type or level' and return null
-  // null is a special value in Sass that means nothing, and it is used to represent the absence of a value, you need to return null if the type or level is not valid
-
   // Guard clause for invalid type
-  @if list.index($color-keys, $type) == null {
+  @if not map.has-key($color-pallete, $type) {
     @warn 'Invalid color type: #{$type}';
     @return null;
   }
 
   // Guard clause for invalid level
-  @if map.get(map.get($color-pallete, $type), $level) == null {
+  @if not map.has-key(map.get($color-pallete, $type), $level) {
     @warn 'Invalid color level: #{$level} for type #{$type}';
     @return null;
   }
 
   // If both type and level are valid, return the color
-  @debug map.get(map.get($color-pallete, $type), $level);
+  // @debug map.get(map.get($color-pallete, $type), $level);
   @return map.get(map.get($color-pallete, $type), $level);
 }
