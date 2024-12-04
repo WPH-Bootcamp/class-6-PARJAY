@@ -1,6 +1,6 @@
 @use '../variables' as *;
 @use 'sass:map';
-@use 'sass:list';
+// @use 'sass:list'; revisi : @use 'sass:list'; pada line 3, saran saya sebaiknya dihapus saja ya
 
 // what method is more efficient?
 // @debug map.get($color-pallete, 'p');       // null
